@@ -20,7 +20,7 @@ export class TimelineComponent {
         <a class="text-link" target="_blank"></a>
         <em>
           - powered by
-          <a class="text-link" href="https://utteranc.es" target="_blank">utteranc.es</a>
+          <a class="text-link" href="https://vartalk.cn" target="_blank">vartalk.cn</a>
         </em>
       </h1>`;
     this.countAnchor = this.element.firstElementChild!.firstElementChild as HTMLAnchorElement;

@@ -3,11 +3,11 @@
 1. Install yarn: https://yarnpkg.com
 2. Clone the repo:
     ```bash
-    git clone https://github.com/utterance/utterances
+    git clone https://github.com/vartalk/vartalk
     ```
 3. Install the project's dependencies using yarn:
     ```bash
-    cd utterances
+    cd vartalk
     yarn install
     ```
 4. Start developing!
@@ -18,4 +18,4 @@
 
 ## Theme Development
 
-Each theme is located in a subdirectory of `src/stylesheets/themes`. Themes must have an `index.scss` and `utterances.scss` files. These are the entrypoint stylesheets for the utterances homepage and utterances widget respectively. *Todo: more instructions*
+Each theme is located in a subdirectory of `src/stylesheets/themes`. Themes must have an `index.scss` and `vartalk.scss` files. These are the entrypoint stylesheets for the vartalk homepage and vartalk widget respectively. *Todo: more instructions*

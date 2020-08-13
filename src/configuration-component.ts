@@ -12,11 +12,11 @@ export class ConfigurationComponent {
     this.element.innerHTML = `
       <h3 id="heading-repository">Repository</h3>
       <p>
-        Choose the repository utterances will connect to.
+        Choose the repository vartalk will connect to.
       </p>
       <ol>
         <li>Make sure the repo is public, otherwise your readers will not be able to view the issues/comments.</li>
-        <li>Make sure the <a href="https://github.com/apps/utterances">utterances app</a>
+        <li>Make sure the <a href="https://github.com/apps/vartalk">vartalk app</a>
           is installed on the repo, otherwise users will not be able to post comments.
         </li>
         <li>If your repo is a fork, navigate to its <em>settings</em> tab and confirm
@@ -125,7 +125,7 @@ export class ConfigurationComponent {
       <p>
         Choose an Utterances theme that matches your blog.
         Can't find a theme you like?
-        <a href="https://github.com/utterance/utterances/blob/master/CONTRIBUTING.md">Contribute</a> a custom theme.
+        <a href="https://github.com/vartalk/vartalk/blob/master/CONTRIBUTING.md">Contribute</a> a custom theme.
       </p>
 
       <select id="theme" class="form-select" value="github-light" aria-label="Theme">
@@ -141,8 +141,8 @@ export class ConfigurationComponent {
       <h3 id="heading-enable">Enable Utterances</h3>
 
       <p>Add the following script tag to your blog's template. Position it where you want the
-      comments to appear. Customize the layout using the <code>.utterances</code> and
-      <code>.utterances-frame</code> selectors.
+      comments to appear. Customize the layout using the <code>.vartalk</code> and
+      <code>.vartalk-frame</code> selectors.
       </p>
       <div class="config-field" id="script" class="highlight highlight-text-html-basic"></div>
       <button id="copy-button" type="button" class="btn btn-blue code-action">Copy</button>
@@ -171,8 +171,8 @@ export class ConfigurationComponent {
         type: 'set-theme',
         theme
       };
-      const utterances = document.querySelector('iframe')!;
-      utterances.contentWindow!.postMessage(message, location.origin);
+      const vartalk = document.querySelector('iframe')!;
+      vartalk.contentWindow!.postMessage(message, location.origin);
     });
 
     const copyButton = this.element.querySelector('#copy-button') as HTMLButtonElement;
@@ -211,7 +211,7 @@ export class ConfigurationComponent {
 
   private makeConfigScript(attrs: string) {
     // tslint:disable-next-line:max-line-length
-    return `<pre><span class="pl-s1">&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://utteranc.es/client.js<span class="pl-pds">"</span></span></span>\n${attrs}\n<span class="pl-s1">        <span class="pl-e">async</span>&gt;</span>\n<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre>`;
+    return `<pre><span class="pl-s1">&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://vartalk.cn/client.js<span class="pl-pds">"</span></span></span>\n${attrs}\n<span class="pl-s1">        <span class="pl-e">async</span>&gt;</span>\n<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre>`;
   }
 
   private copyTextToClipboard(text: string) {

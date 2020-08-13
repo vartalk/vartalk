@@ -81,9 +81,9 @@ addEventListener('not-installed', function handleNotInstalled() {
   removeEventListener('not-installed', handleNotInstalled);
   document.querySelector('.timeline')!.insertAdjacentHTML('afterbegin', `
   <div class="flash flash-error">
-    Error: utterances is not installed on <code>${page.owner}/${page.repo}</code>.
+    Error: vartalk is not installed on <code>${page.owner}/${page.repo}</code>.
     If you own this repo,
-    <a href="https://github.com/apps/utterances" target="_top"><strong>install the app</strong></a>.
+    <a href="https://github.com/apps/vartalk" target="_top"><strong>install the app</strong></a>.
     Read more about this change in
     <a href="https://github.com/utterance/utterances/pull/25" target="_top">the PR</a>.
   </div>`);
@@ -146,8 +146,8 @@ export async function assertOrigin() {
   <div class="flash flash-error flash-not-installed">
     Error: <code>${origin}</code> is not permitted to post to <code>${owner}/${repo}</code>.
     Confirm this is the correct repo for this site's comments. If you own this repo,
-    <a href="https://github.com/${owner}/${repo}/edit/master/utterances.json" target="_top">
-      <strong>update the utterances.json</strong>
+    <a href="https://github.com/${owner}/${repo}/edit/master/vartalk.json" target="_top">
+      <strong>update the vartalk.json</strong>
     </a>
     to include <code>${origin}</code> in the list of origins.<br/><br/>
     Suggested configuration:<br/>

@@ -1,6 +1,6 @@
 import { token } from './oauth';
 import { decodeBase64UTF8 } from './encoding';
-import { UTTERANCES_API } from './utterances-api';
+import { UTTERANCES_API } from './vartalk-api';
 
 const GITHUB_API = 'https://api.github.com/';
 const GITHUB_ENCODING__HTML_JSON = 'application/vnd.github.VERSION.html+json';
@@ -411,7 +411,7 @@ query IssueComments($owner: String!, $repo: String!, $issueQuery: String!) {
   }
 
   repository(owner: $owner, name: $repo) {
-    object(expression: "master:utterances.json") {
+    object(expression: "master:vartalk.json") {
       ... on Blob {
         text
       }
@@ -420,8 +420,8 @@ query IssueComments($owner: String!, $repo: String!, $issueQuery: String!) {
 }
 
 {
-  "issueQuery": "user:jdanyow repo:utterances-demo debug",
+  "issueQuery": "user:jdanyow repo:vartalk-demo debug",
   "owner": "jdanyow",
-  "repo": "utterances-demo"
+  "repo": "vartalk-demo"
 }
 */

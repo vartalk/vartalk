@@ -1,5 +1,5 @@
 {
-  "name": "utterances",
+  "name": "vartalk",
   "version": "1.0.0",
   "description": "A lightweight comments widget built on GitHub issues.",
   "private": true,
@@ -10,17 +10,17 @@
     "comments",
     "blog"
   ],
-  "homepage": "https://utteranc.es",
-  "bugs": "https://github.com/utterance/utterances/issues",
+  "homepage": "https://vartalk.cn",
+  "bugs": "https://github.com/vartalk/vartalk/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/utterance/utterances.git"
+    "url": "https://github.com/vartalk/vartalk.git"
   },
   "scripts": {
-    "start": "parcel serve src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --no-hmr --port 4000",
-    "build": "parcel build src/*.html src/client.ts src/stylesheets/themes/*/{index,utterances}.scss --experimental-scope-hoisting",
+    "start": "parcel serve src/*.html src/client.ts src/stylesheets/themes/*/{index,vartalk}.scss --no-hmr --port 4000",
+    "build": "parcel build src/*.html src/client.ts src/stylesheets/themes/*/{index,vartalk}.scss --experimental-scope-hoisting",
     "lint": "tslint --project tsconfig.json",
-    "predeploy": "yarn run build && touch dist/.nojekyll && echo 'utteranc.es' > dist/CNAME",
+    "predeploy": "yarn run build && touch dist/.nojekyll && echo 'vartalk.cn' > dist/CNAME",
     "deploy": "gh-pages --dist dist"
   },
   "devDependencies": {

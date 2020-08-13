@@ -4,9 +4,9 @@ import { preferredThemeId, preferredTheme } from './preferred-theme';
 
 // slice access token from query string
 const params = deparam(location.search.substr(1));
-const token = params.utterances;
+const token = params.vartalk;
 if (token) {
-  delete params.utterances;
+  delete params.vartalk;
   let search = param(params);
   if (search.length) {
     search = '?' + search;
@@ -18,7 +18,7 @@ let script = document.currentScript as HTMLScriptElement;
 if (script === undefined) {
   // Internet Explorer :(
   // tslint:disable-next-line:max-line-length
-  script = document.querySelector('script[src^="https://utteranc.es/client.js"],script[src^="http://localhost:4000/client.js"]') as HTMLScriptElement;
+  script = document.querySelector('script[src^="https://vartalk.cn/client.js"],script[src^="http://localhost:4000/client.js"]') as HTMLScriptElement;
 }
 
 // gather script element's attributes
@@ -48,13 +48,13 @@ const ogtitleMeta = document.querySelector(`meta[property='og:title'],meta[name=
 attrs['og:title'] = ogtitleMeta ? ogtitleMeta.content : '';
 attrs.token = token;
 
-// create the standard utterances styles and insert them at the beginning of the
+// create the standard vartalk styles and insert them at the beginning of the
 // <head> for easy overriding.
 // NOTE: the craziness with "width" is for mobile safari :(
 document.head.insertAdjacentHTML(
   'afterbegin',
   `<style>
-    .utterances {
+    .vartalk {
       position: relative;
       box-sizing: border-box;
       width: 100%;
@@ -62,7 +62,7 @@ document.head.insertAdjacentHTML(
       margin-left: auto;
       margin-right: auto;
     }
-    .utterances-frame {
+    .vartalk-frame {
       position: absolute;
       left: 0;
       right: 0;
@@ -75,19 +75,19 @@ document.head.insertAdjacentHTML(
   </style>`);
 
 // create the comments iframe and it's responsive container
-const utterancesOrigin = script.src.match(/^https:\/\/utteranc\.es|http:\/\/localhost:\d+/)![0];
-const url = `${utterancesOrigin}/utterances.html`;
+const vartalkOrigin = script.src.match(/^https:\/\/vartalk\.cn|http:\/\/localhost:\d+/)![0];
+const url = `${vartalkOrigin}/vartalk.html`;
 script.insertAdjacentHTML(
   'afterend',
-  `<div class="utterances">
-    <iframe class="utterances-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}"></iframe>
+  `<div class="vartalk">
+    <iframe class="vartalk-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}"></iframe>
   </div>`);
 const container = script.nextElementSibling as HTMLDivElement;
 script.parentElement!.removeChild(script);
 
 // adjust the iframe's height when the height of it's content changes
 addEventListener('message', event => {
-  if (event.origin !== utterancesOrigin) {
+  if (event.origin !== vartalkOrigin) {
     return;
   }
   const data = event.data as ResizeMessage;
