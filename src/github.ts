@@ -420,8 +420,8 @@ query IssueComments($owner: String!, $repo: String!, $issueQuery: String!) {
 }
 
 {
-  "issueQuery": "user:jdanyow repo:vartalk-demo debug",
-  "owner": "jdanyow",
+  "issueQuery": "user:varxzy repo:vartalk-demo debug",
+  "owner": "varxzy",
   "repo": "vartalk-demo"
 }
 */
