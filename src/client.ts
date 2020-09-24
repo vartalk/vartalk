@@ -19,6 +19,7 @@ if (token) {
 }
 
 let script = document.currentScript as HTMLScriptElement;
+let comment = document.querySelector('#comment') as HTMLDivElement;
 
 if (script === undefined) {
     // Internet Explorer :(
@@ -93,25 +94,27 @@ document.head.insertAdjacentHTML(
 const vartalkOrigin = script.src.match(/^https:\/\/vartalk\.cn|http:\/\/localhost:\d+/)![0];
 const url = `${vartalkOrigin}/vartalk.html`;
 
-script.insertAdjacentHTML('afterend', `
-    <div class="vartalk">
-        <iframe class="vartalk-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}"></iframe>
-    </div>
-`);
+if (comment) {
+    comment.insertAdjacentHTML('afterend', `
+        <div class="vartalk">
+            <iframe class="vartalk-frame" title="Comments" scrolling="no" src="${url}?${param(attrs)}"></iframe>
+        </div>
+    `);
 
-const container = script.nextElementSibling as HTMLDivElement;
+    const container = comment.nextElementSibling as HTMLDivElement;
 
-script.parentElement!.removeChild(script);
+    comment.parentElement!.removeChild(comment);
 
-// adjust the iframe's height when the height of it's content changes
-addEventListener('message', event => {
-    if (event.origin !== vartalkOrigin) {
-        return;
-    }
+    // adjust the iframe's height when the height of it's content changes
+    addEventListener('message', event => {
+        if (event.origin !== vartalkOrigin) {
+            return;
+        }
 
-    const data = event.data as ResizeMessage;
+        const data = event.data as ResizeMessage;
 
-    if (data && data.type === 'resize' && data.height) {
-        container.style.height = `${data.height}px`;
-    }
-});
+        if (data && data.type === 'resize' && data.height) {
+            container.style.height = `${data.height}px`;
+        }
+    });
+}
