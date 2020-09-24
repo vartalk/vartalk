@@ -4,112 +4,123 @@ import { pageAttributes } from './page-attributes';
 import { scheduleMeasure } from './measure';
 
 export const reactionNames: Record<ReactionID, string> = {
-  '+1': 'Thumbs Up',
-  '-1': 'Thumbs Down',
-  'laugh': 'Laugh',
-  'hooray': 'Hooray',
-  'confused': 'Confused',
-  'heart': 'Heart',
-  'rocket': 'Rocket',
-  'eyes': 'Eyes'
+    '+1': 'Thumbs Up',
+    '-1': 'Thumbs Down',
+    'laugh': 'Laugh',
+    'hooray': 'Hooray',
+    'confused': 'Confused',
+    'heart': 'Heart',
+    'rocket': 'Rocket',
+    'eyes': 'Eyes'
 };
 
 export const reactionEmoji: Record<ReactionID, string> = {
-  '+1': '👍',
-  '-1': '👎',
-  'laugh': '️😂',
-  'hooray': '️🎉',
-  'confused': '😕',
-  'heart': '❤️',
-  'rocket': '🚀',
-  'eyes': '👀'
+    '+1': '👍',
+    '-1': '👎',
+    'laugh': '️😂',
+    'hooray': '️🎉',
+    'confused': '😕',
+    'heart': '❤️',
+    'rocket': '🚀',
+    'eyes': '👀'
 };
 
 export function getReactionHtml(url: string, reaction: ReactionID, disabled: boolean, count: number) {
-  return `
-  <button
-    reaction
-    type="submit"
-    action="javascript:"
-    formaction="${url}"
-    class="btn BtnGroup-item btn-outline reaction-button"
-    value="${reaction}"
-    aria-label="Toggle ${reactionNames[reaction]} reaction"
-    reaction-count="${count}"
-    ${disabled ? 'disabled' : ''}>
-    ${reactionEmoji[reaction]}
-  </button>`;
+    return `
+        <button
+            reaction
+            type="submit"
+            action="javascript:"
+            formaction="${url}"
+            class="btn BtnGroup-item btn-outline reaction-button"
+            value="${reaction}"
+            aria-label="Toggle ${reactionNames[reaction]} reaction"
+            reaction-count="${count}"
+            ${disabled ? 'disabled' : ''}
+        >${reactionEmoji[reaction]}</button>
+    `;
 }
 
 export function enableReactions(authenticated: boolean) {
-  const submitReaction = async (event: Event) => {
-    const button = event.target instanceof HTMLElement && event.target.closest('button');
-    if (!button) {
-      return;
-    }
-    if (!button.hasAttribute('reaction')) {
-      return;
-    }
-    event.preventDefault();
-    if (!authenticated) {
-      return;
-    }
-    button.disabled = true;
-    const parentMenu = button.closest('details');
-    if (parentMenu) {
-      parentMenu.open = false;
-    }
-    const url = button.formAction;
-    const id = button.value as ReactionID;
-    const { deleted } = await toggleReaction(url, id);
-    const selector = `button[reaction][formaction="${url}"][value="${id}"],[reaction-count][reaction-url="${url}"]`;
-    const elements = Array.from(document.querySelectorAll(selector));
-    const delta = deleted ? -1 : 1;
-    for (const element of elements) {
-      element.setAttribute(
-        'reaction-count',
-        (parseInt(element.getAttribute('reaction-count')!, 10) + delta).toString());
-    }
-    button.disabled = false;
-    scheduleMeasure();
-  };
-  addEventListener('click', submitReaction, true);
+    const submitReaction = async (event: Event) => {
+        const button = event.target instanceof HTMLElement && event.target.closest('button');
+
+        if (!button) {
+            return;
+        }
+
+        if (!button.hasAttribute('reaction')) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (!authenticated) {
+            return;
+        }
+
+        button.disabled = true;
+
+        const parentMenu = button.closest('details');
+
+        if (parentMenu) {
+            parentMenu.open = false;
+        }
+
+        const url = button.formAction;
+        const id = button.value as ReactionID;
+        const { deleted } = await toggleReaction(url, id);
+        const selector = `button[reaction][formaction="${url}"][value="${id}"],[reaction-count][reaction-url="${url}"]`;
+        const elements = Array.from(document.querySelectorAll(selector));
+        const delta = deleted ? -1 : 1;
+
+        for (const element of elements) {
+            element.setAttribute('reaction-count', (parseInt(element.getAttribute('reaction-count')!, 10) + delta).toString());
+        }
+
+        button.disabled = false;
+        scheduleMeasure();
+    };
+    addEventListener('click', submitReaction, true);
 }
 
 export function getReactionsMenuHtml(url: string, align: 'center' | 'right') {
-  const position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
-  const alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
-  const getButtonAndSpan = (id: ReactionID) => getReactionHtml(url, id, false, 0)
-    + `<span class="reaction-name" aria-hidden="true">${reactionNames[id]}</span>`;
-  return `
-  <details class="details-overlay details-popover reactions-popover">
-    <summary ${align === 'center' ? 'tabindex="-1"' : ''}>${addReactionSvgs}</summary>
-    <div class="Popover" style="${position}">
-      <form class="Popover-message ${alignmentClass} box-shadow-large" action="javascript:">
-        <span class="reaction-name">Pick your reaction</span>
-        <div class="BtnGroup">
-          ${reactionTypes.slice(0, 4).map(getButtonAndSpan).join('')}
-        </div>
-        <div class="BtnGroup">
-          ${reactionTypes.slice(4).map(getButtonAndSpan).join('')}
-        </div>
-      </form>
-    </div>
-  </details>`;
+    const position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
+    const alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
+    const getButtonAndSpan = (id: ReactionID) => getReactionHtml(url, id, false, 0) + `<span class="reaction-name" aria-hidden="true">${reactionNames[id]}</span>`;
+
+    return `
+        <details class="details-overlay details-popover reactions-popover">
+            <summary ${align === 'center' ? 'tabindex="-1"' : ''}>${addReactionSvgs}</summary>
+            <div class="Popover" style="${position}">
+                <form class="Popover-message ${alignmentClass} box-shadow-large" action="javascript:">
+                    <span class="reaction-name">Pick your reaction</span>
+                    <div class="BtnGroup">
+                        ${reactionTypes.slice(0, 4).map(getButtonAndSpan).join('')}
+                    </div>
+                    <div class="BtnGroup">
+                        ${reactionTypes.slice(4).map(getButtonAndSpan).join('')}
+                    </div>
+                </form>
+            </div>
+        </details>
+    `;
 }
 
 export function getSignInToReactMenuHtml(align: 'center' | 'right') {
-  const position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
-  const alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
-  return `
-  <details class="details-overlay details-popover reactions-popover">
-    <summary aria-label="Reactions Menu">${addReactionSvgs}</summary>
-    <div class="Popover" style="${position}">
-      <div class="Popover-message ${alignmentClass} box-shadow-large" style="padding: 16px">
-        <span><a href="${getLoginUrl(pageAttributes.url)}" target="_top">Sign in</a> to add your reaction.</span>
-      </div>
-    </div>
-  </details>`;
+    const position = align === 'center' ? 'left: 50%;transform: translateX(-50%)' : 'right:6px';
+    const alignmentClass = align === 'center' ? '' : 'Popover-message--top-right';
+
+    return `
+        <details class="details-overlay details-popover reactions-popover">
+            <summary aria-label="Reactions Menu">${addReactionSvgs}</summary>
+            <div class="Popover" style="${position}">
+                <div class="Popover-message ${alignmentClass} box-shadow-large" style="padding: 16px">
+                    <span><a href="${getLoginUrl(pageAttributes.url)}" target="_top">Sign in</a> to add your reaction.</span>
+                </div>
+            </div>
+        </details>
+    `;
 }
 
 // tslint:disable-next-line:max-line-length
