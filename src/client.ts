@@ -19,7 +19,7 @@ if (token) {
 }
 
 let script = document.currentScript as HTMLScriptElement;
-let comment = document.querySelector('#comment') as HTMLDivElement;
+const comment = document.querySelector('#comment') as HTMLDivElement;
 
 if (script === undefined) {
     // Internet Explorer :(
